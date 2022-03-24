@@ -1,0 +1,50 @@
+#include <sys/types.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define ERROR -1
+#define PUTENV_ERROR -2
+#define TIME_ERROR -3
+#define CTIME_ERROR -4
+#define LOCALTIME_ERROR -5
+
+extern char *tzname[];
+
+int main() {
+    time_t now;
+    struct tm *sp;
+    int Putenv_Res = putenv ("TZ=America/Los_Angeles");
+    if (Putenv_Res == ERROR) {
+        perror("error putenv");
+        return PUTENV_ERROR;
+    }
+
+
+    time_t Rtime =  time(&now);
+    if (Rtime == ERROR) {
+        perror("error time");
+        return TIME_ERROR;
+    }
+
+    char *STRTime = ctime(&now);
+    if (STRTime == NULL) {
+         perror("error ctime");
+         return CTIME_ERROR;
+    }
+
+    printf("%s", STRTime);
+
+    sp = localtime(&now);
+    if (sp == NULL) {
+         perror("error localtime");
+         return LOCALTIME_ERROR;
+    }
+
+    printf("%d/%d/%02d %d:%02d %s\n",
+         sp->tm_mon + 1, sp->tm_mday,
+         sp->tm_year + 1900, sp->tm_hour,
+         sp->tm_min, tzname[sp->tm_isdst]);
+
+   exit(0);
+}
