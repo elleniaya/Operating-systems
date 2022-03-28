@@ -13,7 +13,7 @@ extern char *tzname[];
 
 int main() {
     time_t now; //определяем переменную now типа time_t
-    struct tm *sp; //определяем указатель на структуру tm
+    struct tm *sp; //определяем указатель на структуру sp
     //Изменяем переменную среды TZ
     //Наиболее употребительный формат значения TZ, применяемый в современных Unix-системах — это имя файла в каталоге /usr/share/lib/zoneinfo/
     int Putenv_Res = putenv ("TZ=America/Los_Angeles"); 
