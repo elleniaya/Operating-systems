@@ -13,7 +13,7 @@ extern char *tzname[];
 
 int main() {
     time_t now; //определяем переменную now типа time_t
-    struct tm *sp; //определяем указатель на структуру sp
+    struct tm *tm; //определяем указатель на структуру tm
     //Изменяем переменную среды TZ
     //Наиболее употребительный формат значения TZ, применяемый в современных Unix-системах — это имя файла в каталоге /usr/share/lib/zoneinfo/
     int Putenv_Res = putenv ("TZ=America/Los_Angeles"); 
@@ -39,17 +39,17 @@ int main() {
     
     printf("%s", STRTime);
 
-    sp = localtime(&now);
+    tm = localtime(&now);
     //Обработка ошибки
-    if (sp == NULL) {
+    if (tm == NULL) {
          perror("error localtime");
          return LOCALTIME_ERROR;
     }
     //печать значений полей структуры tm
     printf("%d/%d/%02d %d:%02d %s\n",
-         sp->tm_mon + 1, sp->tm_mday,
-         sp->tm_year + 1900, sp->tm_hour,
-         sp->tm_min, tzname[sp->tm_isdst]);
+         tm->tm_mon + 1, tm->tm_mday,
+         tm->tm_year + 1900, tm->tm_hour,
+         tm->tm_min, tzname[tm->tm_isdst]);
 
    exit(0);
 }
