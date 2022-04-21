@@ -4,6 +4,7 @@
 #define FORK_ERROR -1
 #define ERROR 1
 #define CHILD 0
+#define EXECLP_ERROR -1
 
 int main() {
   pid_t pid = fork();
@@ -15,7 +16,7 @@ int main() {
   if (pid == CHILD) {
         execlp("cat", "cat", "text.txt", NULL);
         perror("execlp error");
-        return ERROR;
+        return EXECLP_ERROR;
   }
   
   printf("This is the parent process\n");
