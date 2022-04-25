@@ -6,7 +6,7 @@
 #define CHILD 0
 #define EXECLP_ERROR -1
 
-int main() {
+int main(int argc, char** argv) {
   pid_t pid = fork();
   if (pid == FORK_ERROR) {
         perror("fork error");
@@ -14,7 +14,7 @@ int main() {
   }
   
   if (pid == CHILD) {
-        execlp("cat", "cat", "text.txt", NULL);
+        execlp("cat", "cat", argv[1], NULL);
         perror("execlp error");
         return EXECLP_ERROR;
   }
