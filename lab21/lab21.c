@@ -8,11 +8,11 @@
 #define ERROR 1
 
 int count = 0;
-bool flag = true;
+int flag = 1;
 
 void catch_signal(int sig){
     if(sig == SIGQUIT){
-        flag = false;
+        flag = 0;
         return;
     }
     count++;
