@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#define SOUND "\a"
+#define BELL "\a"
 #define ERROR 1
 
 int count = 0;
@@ -16,7 +16,7 @@ void catch_signal(int sig){
         return;
     }
     count++;
-    printf("%c", SOUND);
+    printf("%c", BELL);
 }
 
 int main(){
