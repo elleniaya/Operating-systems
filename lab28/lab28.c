@@ -10,7 +10,8 @@
 int main() {
     FILE *fp[2];
 
-    if (p2open("sort -n", fp) == -1) { 
+    int p2o = p2open("sort -n", fp);
+    if (p2o == -1) { 
         perror("p2open error");
         return ERROR; 
     }
@@ -36,8 +37,8 @@ int main() {
 
         printf("%c", c);
     }
-
-    if (p2close(fp) == -1) {
+    int p2c = p2close(fp);
+    if (p2c == -1) {
         perror("p2close error");
         return CLOSING_ERROR;
     }
