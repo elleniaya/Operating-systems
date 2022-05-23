@@ -4,10 +4,15 @@
 #include <unistd.h>
 #include <time.h>
 
+#define ERROR 1
+
 int main() {
     FILE *fp[2];
 
-    if (p2open("sort -n", fp) == -1) { return 1; }
+    if (p2open("sort -n", fp) == -1) { 
+        perror("p2open error");
+        return ERROR; 
+    }
 
     srand(time(NULL));
     for (int i = 0; i < 100; i++) {
