@@ -4,16 +4,18 @@
 #include <unistd.h>
 #include <time.h>
 
-#define ERROR 1
-#define CLOSING_ERROR 2
+#define ERROR -1
+#define ERROR_P2OPEN 1
+#define FCLOSE_ERROR 2
+#define P2CLOSE_ERROR 3
 
 int main() {
     FILE *fp[2];
 
     int p2o = p2open("sort -n", fp);
-    if (p2o == -1) { 
+    if (p2o == ERROR) { 
         perror("p2open error");
-        return ERROR; 
+        return ERROR_P2OPEN; 
     }
 
     srand(time(NULL));
@@ -22,9 +24,9 @@ int main() {
     }
 
     int close = fclose(fp[0]);
-    if (close == EOF) {
+    if (close == ERROR) {
         perror("fclose error");
-        return CLOSING_ERROR;  
+        return FCLOSE_ERROR;  
     }
 
     char c;
@@ -37,10 +39,11 @@ int main() {
 
         printf("%c", c);
     }
+    
     int p2c = p2close(fp);
-    if (p2c == -1) {
+    if (p2c == ERROR) {
         perror("p2close error");
-        return CLOSING_ERROR;
+        return P2CLOSE_ERROR;
     }
 
     return 0;
