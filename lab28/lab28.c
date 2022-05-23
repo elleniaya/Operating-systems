@@ -5,6 +5,7 @@
 #include <time.h>
 
 #define ERROR 1
+#define CLOSING_ERROR 2
 
 int main() {
     FILE *fp[2];
@@ -19,7 +20,11 @@ int main() {
         fprintf(fp[0], "%d\n", rand() % 100);
     }
 
-    fclose(fp[0]);
+    int close = fclose(fp[0]);
+    if (close == EOF) {
+        perror("fclose error");
+        return CLOSING_ERROR;  
+    }
 
     char c;
     int count = 0;
@@ -32,7 +37,10 @@ int main() {
         printf("%c", c);
     }
 
-    p2close(fp);
+    if (p2close(fp) == -1) {
+        perror("p2close error");
+        return CLOSING_ERROR;
+    }
 
     return 0;
 }
