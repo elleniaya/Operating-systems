@@ -18,31 +18,21 @@ void generate_list(FILE *fp[2]) {
     }
 }
 
-/*void print_list(FILE *fp[2]) {
-    char c;
-    int count = 0;
-    while (read(fileno(fp[1]), &c, 1) == 1) {
-        if (c == '\n') {
-            printf(++count % 10 == 0 ? "\n" : " ");
-            continue;
-        }
-
-        printf("%c", c);
-    }
-}*/
-
 void print_list(FILE *fp[2]) {
     char c;
     int count = 0;
     int result = 0;
+    int n = 0;
     while(1) {
         result = read(fileno(fp[1]), &c, 1);
         if (result == 1) {
             if (c == '\n') {
-                printf(++count % 10 == 0 ? "\n" : " ");
+                if (n == 1) printf(" ");
+                n = 0;
+                printf(++count % 10 == 0 ? "\n" : "  ");
                 continue;
             }
-
+            n++;
             printf("%c", c);
         } else break;
     }
