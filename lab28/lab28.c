@@ -11,14 +11,14 @@
 #define COUNT_NUMBER 100
 #define RANGE 100
 
-void generate_list(FILE *fp[0]) {
+void generate_list(FILE *fp[2]) {
     srand(time(NULL));
     for (int i = 0; i < COUNT_NUMBER; i++) {
         fprintf(fp[0], "%d\n", rand() % RANGE);
     }
 }
 
-void print_list(FILE *fp[1]) {
+void print_list(FILE *fp[2]) {
     char c;
     int count = 0;
     while (read(fileno(fp[1]), &c, 1) == 1) {
@@ -35,21 +35,21 @@ int main() {
     FILE *fp[2];
 
     int p2o = p2open("sort -n", fp);
-    if (p2o == ERROR) { 
+    if (p2o == ERROR) {
         perror("p2open error");
-        return ERROR_P2OPEN; 
+        return ERROR_P2OPEN;
     }
-    
-    generate_list(&fp[0]);
-    
+
+    generate_list(fp);
+
     int close = fclose(fp[0]);
     if (close == ERROR) {
         perror("fclose error");
-        return FCLOSE_ERROR;  
+        return FCLOSE_ERROR;
     }
 
-    print_list(&fp[1]);
-    
+    print_list(fp);
+
     int p2c = p2close(fp);
     if (p2c == ERROR) {
         perror("p2close error");
