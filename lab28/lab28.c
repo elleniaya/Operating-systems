@@ -7,7 +7,7 @@
 #define ERROR -1
 #define ERROR_P2OPEN 1
 #define FCLOSE_ERROR 2
-#define P2CLOSE_ERROR 3
+#define PCLOSE_ERROR 3
 #define READ_ERROR 4
 #define SUCCESS 0
 #define COUNT_NUMBER 100
@@ -65,10 +65,10 @@ int main() {
         return READ_ERROR;
     }
 
-    int p2c = p2close(fp);
-    if (p2c == ERROR) {
-        perror("p2close error");
-        return P2CLOSE_ERROR;
+    int pc = pclose(fp[1]);
+    if (pc == ERROR) {
+        perror("pclose error");
+        return PCLOSE_ERROR;
     }
     return SUCCESS;
 }
