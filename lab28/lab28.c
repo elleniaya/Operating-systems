@@ -28,16 +28,15 @@ int print_list(FILE *fp1) {
     while(1) {
         result = read(fileno(fp1), &c, 1);
         if (result == ERROR) return ERROR;
-        if (result == 1) {
-            if (c == '\n') {
-                if (n == 1) printf(" ");
+        if (result != 1) break;
+        if (n == 1 && c == '\n') printf(" ");
+        if (c == '\n') {
                 n = 0;
                 printf(++count % 10 == 0 ? "\n" : "  ");
                 continue;
-            }
-            n++;
-            printf("%c", c);
-        } else break;
+         }
+         n++;
+         printf("%c", c);
     }
     return SUCCESS;
 }
