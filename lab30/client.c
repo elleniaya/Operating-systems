@@ -11,8 +11,13 @@
 #define SOCKET_ERROR 1
 #define CONNECT_ERROR 2
 #define CLOSE_ERROR 3
+#define SIGSET_ERROR 4
 
 #define BUFFER_SIZE 256
+
+void catch_signal(int sig) {
+    printf("server is not available");
+}
 
 int message_write(int socket_descriptor) {
     char message[BUFFER_SIZE];
@@ -33,6 +38,12 @@ int message_write(int socket_descriptor) {
 }
 
 int main() {
+    void* sigset_res = sigset(SIGPIPE, catch_signal);
+    if (sigset_res == SIG_ERR){
+        perror("sigset error");
+        return SIGSET_ERROR;
+    }
+    
     char ADDR[] = "mysocket";
   
     struct sockaddr_un address;
