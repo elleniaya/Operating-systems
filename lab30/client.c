@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #define ERROR -1
+#define SUCCESS 0
 
 #define SOCKET_ERROR 1
 #define CONNECT_ERROR 2
@@ -21,7 +22,7 @@ void catch_signal(int sig) {
 
 int message_write(int socket_descriptor) {
     char message[BUFFER_SIZE];
-    while(TRUE){
+    while(1){
         int read_result = read(STDIN_FILENO, message, BUFFER_SIZE);
         if (read_result == ERROR){
             perror("read error");
