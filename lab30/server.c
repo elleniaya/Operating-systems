@@ -20,7 +20,7 @@
 #define BUFFER_SIZE 256
 
 int message_read(int client_socket_descriptor) {
-  char message[MAX_BUF];
+  char message[BUFFER_SIZE];
   while(1){
         int read_result = read(client_socket_descriptor, message, BUFFER_SIZE);
         if (read_result == ERROR){
