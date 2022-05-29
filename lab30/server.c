@@ -21,7 +21,7 @@
 
 int message_read(int client_socket_descriptor) {
   char message[MAX_BUF];
-  while(TRUE){
+  while(1){
         int read_result = read(client_socket_descriptor, message, BUFFER_SIZE);
         if (read_result == ERROR){
             perror("read error");
