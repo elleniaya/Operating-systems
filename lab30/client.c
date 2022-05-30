@@ -21,6 +21,15 @@ void catch_signal(int sig) {
     exit(0);
 }
 
+int socket_close(int socket_descriptor){
+    int close_result = close(socket_descriptor);
+    if (close_result == ERROR){
+        perror("close error");
+        return ERROR;
+    }
+    return SUCCESS;
+}
+
 int message_write(int socket_descriptor) {
     char message[BUFFER_SIZE];
     while(1){
@@ -64,28 +73,17 @@ int main() {
     int connect_res = connect(socket_descriptor, (struct sockaddr*) &address, sizeof(address));
     if (connect_res == ERROR) {
         perror("connect error");
-        close_result = close(socket_descriptor);
-        if (close_result == ERROR){
-             perror("close error");
-             return CLOSE_ERROR;
-        }
+        close_socket(socket_descriptor);
         return CONNECT_ERROR;
     }
     
     int write_res = write_message(socket_descriptor);
     if (write_res == ERROR){
-        close_result = close(socket_descriptor);
-        if (close_result == ERROR){
-             perror("close error");
-             return CLOSE_ERROR;
-        }
+        close_socket(socket_descriptor);
         return ERROR;
     }
     
-    close_result = close(socket_descriptor);
-    if (close_result == ERROR){
-         perror("close error");
-         return CLOSE_ERROR;
-    }
+    int res = close_socket(socket_descriptor);
+    if (res == ERROR) return ERROR;
     return SUCCESS;
 }
