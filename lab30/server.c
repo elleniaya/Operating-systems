@@ -60,7 +60,7 @@ int main() {
     address.sun_family = AF_UNIX;
     strcpy(address.sun_path, ADDR);
   
-    int bind_result = bind(socket_descriptor, (const struct sockaddr *) address, sizeof(*address));
+    int bind_result = bind(socket_descriptor, (const struct sockaddr *) &address, sizeof(address));
     if (bind_result == ERROR) {
         perror("bind error");
         return BIND_ERROR;
@@ -81,12 +81,12 @@ int main() {
     int read_result = message_read(client_socket_descriptor);
   
     if (read_result == ERROR){
-        close_socket(client_socket_descriptor);  
-        close_socket(socket_descriptor);   
+        socket_close(client_socket_descriptor);  
+        socket_close(socket_descriptor);   
         return READ_ERROR;
     }
   
-    int res = close_socket(client_socket_descriptor);
+    int res = socket_close(client_socket_descriptor);
     if (res == ERROR) return ERROR;
   
     int unlink_result = unlink(ADDR);
