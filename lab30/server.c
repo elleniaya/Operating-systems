@@ -63,18 +63,21 @@ int main() {
     int bind_result = bind(socket_descriptor, (const struct sockaddr *) &address, sizeof(address));
     if (bind_result == ERROR) {
         perror("bind error");
+        socket_close(socket_descriptor); 
         return BIND_ERROR;
     }
 
     int listen_result = listen(socket_descriptor, BACKLOG);
     if (listen_result == ERROR){
         perror("listen error");
+        socket_close(socket_descriptor); 
         return LISTEN_ERROR;
     }
 
     int client_socket_descriptor = accept(socket_descriptor, NULL, NULL);
     if (client_socket_descriptor == ERROR) {
         perror("accept error");
+        socket_close(socket_descriptor); 
         return ACCEPT_ERROR;
     }
     
