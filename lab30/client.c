@@ -18,6 +18,7 @@
 
 void catch_signal(int sig) {
     fprintf(stderr, "Server is not available\n");
+    exit(0);
 }
 
 int message_write(int socket_descriptor) {
