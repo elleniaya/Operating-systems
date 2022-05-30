@@ -77,7 +77,7 @@ int main() {
         return CONNECT_ERROR;
     }
     
-    int write_res = write_message(socket_descriptor);
+    int write_res = message_write(socket_descriptor);
     if (write_res == ERROR){
         socket_close(socket_descriptor);
         return ERROR;
