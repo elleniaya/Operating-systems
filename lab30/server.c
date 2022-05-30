@@ -39,6 +39,7 @@ int message_read(int client_socket_descriptor) {
 
 int main() {
     char ADDR[] = "mysocket";
+    unlink("mysocket");
     struct sockaddr_un address;
     memset(&address, 0, sizeof(struct sockaddr_un));
   
