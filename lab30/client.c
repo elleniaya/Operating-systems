@@ -17,7 +17,7 @@
 #define BUFFER_SIZE 256
 
 void catch_signal(int sig) {
-    printf("server is not available");
+    fprintf(stderr, "Server is not available\n");
 }
 
 int message_write(int socket_descriptor) {
