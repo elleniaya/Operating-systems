@@ -96,6 +96,8 @@ int main() {
   
     int res = socket_close(client_socket_descriptor);
     if (res == ERROR) return ERROR;
+    res = socket_close(socket_descriptor);
+    if (res == ERROR) return ERROR;
   
     int unlink_result = unlink(ADDR);
     if (unlink_result == ERROR){
