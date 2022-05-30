@@ -13,8 +13,7 @@
 #define LISTEN_ERROR 3
 #define ACCEPT_ERROR 4
 #define READ_ERROR 5
-#define CLOSE_ERROR 6
-#define UNLINK_ERROR 7
+#define UNLINK_ERROR 6
 
 #define BACKLOG 1
 #define BUFFER_SIZE 256
@@ -33,6 +32,15 @@ int message_read(int client_socket_descriptor) {
             message[i] = toupper(message[i]);
             printf("%c", message[i]);
         }
+    }
+    return SUCCESS;
+}
+
+int socket_close(int socket_descriptor){
+    int close_result = close(socket_descriptor);
+    if (close_result == CLOSE_ERROR){
+        perror("close");
+        return ERROR;
     }
     return SUCCESS;
 }
@@ -72,26 +80,14 @@ int main() {
     
     int read_result = message_read(client_socket_descriptor);
   
-    int close_result = 0;
-    if (read_result == ERROR) {
-        close_result = close(client_socket_descriptor);
-        if (close_result == ERROR){
-              perror("close error");
-              return CLOSE_ERROR;
-        }
-        close_result = close(socket_descriptor);
-        if (close_result == ERROR){
-              perror("close error");
-              return CLOSE_ERROR;
-        }
+    if (read_result == ERROR){
+        close_socket(client_socket_descriptor);  
+        close_socket(socket_descriptor);   
         return READ_ERROR;
     }
   
-    close_result = close(client_socket_descriptor);
-    if (close_result == ERROR){
-              perror("close error");
-              return CLOSE_ERROR;
-    }
+    int res = close_socket(client_socket_descriptor);
+    if (res == ERROR) return ERROR;
   
     int unlink_result = unlink(ADDR);
     if (unlink_result == ERROR){
