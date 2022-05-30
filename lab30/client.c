@@ -73,17 +73,17 @@ int main() {
     int connect_res = connect(socket_descriptor, (struct sockaddr*) &address, sizeof(address));
     if (connect_res == ERROR) {
         perror("connect error");
-        close_socket(socket_descriptor);
+        socket_close(socket_descriptor);
         return CONNECT_ERROR;
     }
     
     int write_res = write_message(socket_descriptor);
     if (write_res == ERROR){
-        close_socket(socket_descriptor);
+        socket_close(socket_descriptor);
         return ERROR;
     }
     
-    int res = close_socket(socket_descriptor);
+    int res = socket_close(socket_descriptor);
     if (res == ERROR) return ERROR;
     return SUCCESS;
 }
