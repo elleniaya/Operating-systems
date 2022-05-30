@@ -38,7 +38,7 @@ int message_read(int client_socket_descriptor) {
 
 int socket_close(int socket_descriptor){
     int close_result = close(socket_descriptor);
-    if (close_result == CLOSE_ERROR){
+    if (close_result == ERROR){
         perror("close");
         return ERROR;
     }
