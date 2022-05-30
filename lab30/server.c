@@ -53,6 +53,7 @@ int main() {
   
     int socket_descriptor = socket(AF_UNIX, SOCK_STREAM, 0);
     if (socket_descriptor == ERROR) {
+        unlink(ADDR);
         perror("socket error");
         return SOCKET_ERROR;
     }
@@ -62,6 +63,7 @@ int main() {
   
     int bind_result = bind(socket_descriptor, (const struct sockaddr *) &address, sizeof(address));
     if (bind_result == ERROR) {
+        unlink(ADDR);
         perror("bind error");
         socket_close(socket_descriptor); 
         return BIND_ERROR;
@@ -69,6 +71,7 @@ int main() {
 
     int listen_result = listen(socket_descriptor, BACKLOG);
     if (listen_result == ERROR){
+        unlink(ADDR);
         perror("listen error");
         socket_close(socket_descriptor); 
         return LISTEN_ERROR;
@@ -76,6 +79,7 @@ int main() {
 
     int client_socket_descriptor = accept(socket_descriptor, NULL, NULL);
     if (client_socket_descriptor == ERROR) {
+        unlink(ADDR);
         perror("accept error");
         socket_close(socket_descriptor); 
         return ACCEPT_ERROR;
@@ -84,6 +88,7 @@ int main() {
     int read_result = message_read(client_socket_descriptor);
   
     if (read_result == ERROR){
+        unlink(ADDR);
         socket_close(client_socket_descriptor);  
         socket_close(socket_descriptor);   
         return READ_ERROR;
