@@ -18,7 +18,6 @@
 
 void catch_signal(int sig) {
     fprintf(stderr, "Server is not available\n");
-    exit(0);
 }
 
 int socket_close(int socket_descriptor){
