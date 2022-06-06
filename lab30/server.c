@@ -99,11 +99,7 @@ int main() {
     res = socket_close(socket_descriptor);
     if (res == ERROR) return ERROR;
   
-    int unlink_result = unlink(ADDR);
-    if (unlink_result == ERROR){
-        perror("unlink error");
-        return UNLINK_ERROR;
-    }
+    unlink(ADDR);
   
     return SUCCESS;
 }
