@@ -14,9 +14,9 @@ void* thread_func(void* param){
 }
 
 int main() {
-    pthread_t thread;
+    pthread_t tid;
 
-    int res = pthread_create(&thread, NULL, thread_func, NULL);
+    int res = pthread_create(&tid, NULL, thread_func, NULL);
     if (res){
         printf("Error %d: %s\n", res, strerror(res));
         return ERROR;
