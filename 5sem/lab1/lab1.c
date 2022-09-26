@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <string.h>
 
+#define SUCCESS 0
 #define ERROR -1
 
 void* thread_func(void* param){
@@ -29,5 +30,5 @@ int main() {
 
     pthread_exit(NULL);
 
-    return 0;
+    return SUCCESS;
 }
