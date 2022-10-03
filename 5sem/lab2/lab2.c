@@ -20,9 +20,13 @@ int main() {
         printf("Error %d: %s\n", res, strerror(res));
         return ERROR;
     }
-  
-    pthread_join(tid, NULL);
-  
+
+    int res_join = pthread_join(tid, NULL);
+    if (res_join) {
+            printf("Error %d: %s\n", res_join, strerror(res_join));
+            return ERROR;
+    }
+
     printf("one\n");
     printf("two\n");
     printf("three\n");
