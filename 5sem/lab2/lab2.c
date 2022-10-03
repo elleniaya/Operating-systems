@@ -23,8 +23,8 @@ int main() {
 
     int res_join = pthread_join(tid, NULL);
     if (res_join) {
-            printf("Error %d: %s\n", res_join, strerror(res_join));
-            return ERROR;
+        printf("Error %d: %s\n", res_join, strerror(res_join));
+        return ERROR;
     }
 
     printf("one\n");
