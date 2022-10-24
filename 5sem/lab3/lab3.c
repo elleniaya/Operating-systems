@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define ERROR -1
+#define NUMBER_OF_THREADS 4
 
 void *printString(void *args) {
     for (char **s = (char **)args; *s != NULL; ++s) {
@@ -12,8 +13,8 @@ void *printString(void *args) {
 }
 
 int main() {
-   pthread_t threads[4];
-   char *args[][4] = {
+   pthread_t threads[NUMBER_OF_THREADS];
+   char *args[][NUMBER_OF_THREADS] = {
             {"1 thread:: 1 line", "1 thread:: 2 line", "1 thread:: 3 line", NULL},
             {"2 thread:: 1 line", "2 thread:: 2 line", "2 thread:: 3 line", NULL},
             {"3 thread:: 1 line", "3 thread:: 2 line", "3 thread:: 3 line", NULL},
@@ -22,7 +23,7 @@ int main() {
 
    int status = 0;
 
-   for (int i = 0; i < 4; i++){
+   for (int i = 0; i < NUMBER_OF_THREADS; i++){
        status = pthread_create(&threads[i], NULL, printString, (void*)args[i]);
 
        if (status){
@@ -31,13 +32,14 @@ int main() {
        }
    }
 
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < NUMBER_OF_THREADS; i++){
         status = pthread_join(threads[i], NULL);
 
         if (status){
           printf("Error %d: %s\n", status, strerror(status));
           return ERROR;
          }
+
     }
 
     return 0;
