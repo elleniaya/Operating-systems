@@ -32,6 +32,6 @@ int main() {
   
      sleep(2);
 
-     int res = pthread_kill(thread, SIGINT);
+     int r = pthread_kill(thread, SIGINT);
      return 0;
 }
