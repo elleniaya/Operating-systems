@@ -13,7 +13,7 @@ int isMainOutput = 1;
 void * threadFunction(void * param){
     for (int i = 0; i < COUNT; ++i){
         pthread_mutex_lock(&mutex);
-        while (isMainOutput){
+        if (isMainOutput){
             pthread_cond_wait(&condVar, &mutex);
         }
         isMainOutput = 1;
@@ -34,7 +34,7 @@ int main(int argc, char ** argv) {
     }
     for (int i = 0; i < COUNT; ++i){
         pthread_mutex_lock(&mutex);
-        while (!isMainOutput){
+        if (!isMainOutput){
             pthread_cond_wait(&condVar, &mutex);
         }
         isMainOutput = 0;
@@ -42,5 +42,6 @@ int main(int argc, char ** argv) {
         pthread_mutex_unlock(&mutex);
         pthread_cond_signal(&condVar);
     }
+    pthread_cond_destroy(&condVar);
     pthread_exit(NULL);
 }
